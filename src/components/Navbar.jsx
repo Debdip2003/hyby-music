@@ -1,17 +1,19 @@
-import { NavLink } from "react-router-dom";
-import logo from "..//assets/logo.png";
-import logo_dark from "..//assets/logo_dark.png";
-import { CiSearch } from "react-icons/ci";
-import NavbarData from "../data/NavbarData";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { CiSearch } from "react-icons/ci";
+import { FiMenu, FiX } from "react-icons/fi"; // Mobile menu icons
+import logo from "../assets/logo.png";
+import logo_dark from "../assets/logo_dark.png";
+import NavbarData from "../data/NavbarData";
 
 const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem("darkMode") === "true"; // Get from localStorage
+    return localStorage.getItem("darkMode") === "true";
   });
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // For mobile menu
+
   useEffect(() => {
-    // Apply dark mode styles to the body when isDarkMode is true
     if (isDarkMode) {
       document.body.classList.add("dark");
     } else {
@@ -22,14 +24,20 @@ const Navbar = () => {
   const toggleDarkMode = () => {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode);
-    localStorage.setItem("darkMode", newMode); // Save to localStorage
+    localStorage.setItem("darkMode", newMode);
   };
 
   return (
-    <div className="w-full flex items-center justify-between px-24 py-4 transition-colors duration-300">
-      <img src={isDarkMode ? logo_dark : logo} alt="logo" className="h-16" />
+    <nav className="w-full flex items-center justify-between px-6 md:px-12 py-4 transition-colors duration-300">
+      {/* Logo */}
+      <img
+        src={isDarkMode ? logo_dark : logo}
+        alt="logo"
+        className="h-12 md:h-16"
+      />
 
-      <div className="flex items-center space-x-8">
+      {/* Desktop Menu */}
+      <div className="hidden md:flex items-center space-x-8">
         {NavbarData.map((data) => (
           <NavLink
             key={data.id}
@@ -45,6 +53,31 @@ const Navbar = () => {
         ))}
       </div>
 
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden text-3xl"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        {isMenuOpen ? <FiX /> : <FiMenu />}
+      </button>
+
+      {/* Mobile Menu Dropdown */}
+      {isMenuOpen && (
+        <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-900 shadow-md py-4 md:hidden">
+          {NavbarData.map((data) => (
+            <NavLink
+              key={data.id}
+              to={data.disabled ? "" : data.path}
+              className="block px-6 py-2 text-lg text-gray-800 dark:text-white"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {data.name}
+            </NavLink>
+          ))}
+        </div>
+      )}
+
+      {/* Search & Dark Mode Toggle */}
       <div className="flex items-center space-x-4">
         <span className="bg-black p-1 rounded-full">
           <CiSearch className="text-2xl text-white" />
@@ -55,7 +88,7 @@ const Navbar = () => {
           className={`w-14 h-7 rounded-full relative transition-colors duration-300 hover:cursor-pointer ${
             isDarkMode ? "bg-white" : "bg-black"
           }`}
-          onClick={toggleDarkMode} //handle the toggle functionality
+          onClick={toggleDarkMode}
         >
           <div
             className={`w-5 h-5 rounded-full absolute top-1 transition-all duration-300 ${
@@ -64,7 +97,7 @@ const Navbar = () => {
           ></div>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -5,30 +5,31 @@ const AlbumCard = ({ album }) => {
   const { albumCover, albumName, artistName } = album;
 
   return (
-    <div className="relative">
-      {" "}
-      <div className="bg-black rounded-lg w-60">
-        {/*display images for album cover */}
-        <img
-          src={albumCover}
-          alt={albumName}
-          className="rounded-lg p-2  object-cover"
-        />
-        {/*display album name and album artist */}
-        <div className="p-2">
-          <h3 className="text-lg font-semibold text-white">{albumName}</h3>
-          <p className="text-sm mt-1 text-white">{artistName}</p>
-        </div>
+    <div className="relative bg-black rounded-lg w-60 p-4 transition-transform transform hover:scale-105">
+      {/* Display images for album cover */}
+      <img
+        src={albumCover}
+        alt={albumName}
+        className="rounded-lg object-cover w-full h-60"
+      />
+
+      {/* Display album name and album artist */}
+      <div className="p-2 text-center">
+        <h3 className="text-lg font-semibold text-white">{albumName}</h3>
+        <p className="text-sm mt-1 text-gray-400">{artistName}</p>
       </div>
-      {/* display play button */}
-      <button className="absolute top-2/5 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center bg-white rounded-full p-2">
-        <FaPlay className=" text-black size-5" />
-      </button>
+
+      {/* Display play button with hover effect */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/50 rounded-lg">
+        <button className="bg-white text-black rounded-full p-3 shadow-lg">
+          <FaPlay className="size-6" />
+        </button>
+      </div>
     </div>
   );
 };
 
-// define the prop types
+// Define prop types
 AlbumCard.propTypes = {
   album: PropTypes.shape({
     albumCover: PropTypes.string.isRequired,

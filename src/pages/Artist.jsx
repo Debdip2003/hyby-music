@@ -12,10 +12,8 @@ const Artist = () => {
       <ArtistGrid />
       {/* explore button */}
       <div className="flex justify-center mt-16">
-        {" "}
-        <div className="w-1/6 py-3 rounded-md bg-black text-white">
-          {" "}
-          <Button className="w-full">Explore</Button>{" "}
+        <div className="w-auto px-6 py-3 rounded-md bg-black text-white">
+          <Button className="w-full text-center">Explore</Button>
         </div>
       </div>
     </div>

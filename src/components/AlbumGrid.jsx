@@ -3,9 +3,8 @@ import AlbumCard from "./AlbumCard";
 
 const AlbumGrid = () => {
   return (
-    <div>
-      {" "}
-      <div className="w-full flex items-center justify-around px-20 ">
+    <div className="w-full px-8 py-12">
+      <div className="flex justify-evenly md:flex flex-wrap gap-6 place-items-center">
         {albumDetails.map((album, index) => (
           <AlbumCard key={index} album={album} />
         ))}
