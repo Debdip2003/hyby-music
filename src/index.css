@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+body.dark {
+  background-color: black;
+  color: white;
+}
+
+body.dark * {
+  color: inherit;
+}
+
+body.dark svg {
+  fill: white !important;
+  color: white !important;
+}
+
+/* Styles for the slider */
+.dark .slider-container {
+  /* Add this class to the outer div if you want to style it */
+  background-color: white; /* Background color of the slider container in dark mode */
+}
+
+.dark .slider-circle {
+  /* Add this class to the inner div if you want to style it */
+  background-color: black; /* Color of the sliding circle in dark mode */
+}
+
+body.dark .bg-black {
+  @apply bg-white text-black;
+}
+
+body.dark .text-black {
+  @apply text-black;
+}
+
+body.dark .transition-colors {
+  @apply text-white;
+}
