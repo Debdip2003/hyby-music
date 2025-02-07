@@ -32,7 +32,7 @@ const Homepage = () => {
       {/* explore button */}
       <div className="flex justify-center mt-16">
         <div className="w-auto px-6 py-3 rounded-md bg-black text-white">
-          <Button className="w-full text-center">Explore</Button>
+          <Button className="w-full text-center text-xl">Explore</Button>
         </div>
       </div>
 

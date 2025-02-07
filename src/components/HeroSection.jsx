@@ -18,7 +18,9 @@ const HeroSection = () => {
 
         {/* Sign-in Button */}
         <div className="w-1/2 sm:w-1/4 bg-black text-white mt-10 sm:mt-16 rounded-md py-3 mx-auto md:mx-0">
-          <Button>Sign in</Button>
+          <Button className="w-full text-xl text-white font-semibold py-2 rounded-md shadow-md hover:from-purple-600 hover:to-blue-500 transition-all duration-300">
+            Sign in
+          </Button>
         </div>
       </div>
 

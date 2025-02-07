@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import Button from "./Button";
 import headphone from "../assets/headphone.png";
 
