@@ -7,12 +7,18 @@ import logo_dark from "../assets/logo_dark.png";
 import NavbarData from "../data/NavbarData";
 
 const Navbar = () => {
+  //get user's system theme
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme:dark)").matches;
+
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem("darkMode") === "true";
+    const storedTheme = localStorage.getItem("darkMode");
+    return storedTheme !== null ? storedTheme === "true" : getSystemTheme();
   });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // For mobile menu
 
+  //useEffect for dark and light mode
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add("dark");
@@ -21,10 +27,16 @@ const Navbar = () => {
     }
   }, [isDarkMode]);
 
+  //useEffect for using the system theme
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme:dark");
+    const handleChange = (e) => setIsDarkMode(e.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem("darkMode", newMode);
+    setIsDarkMode((prev) => !prev);
   };
 
   return (
