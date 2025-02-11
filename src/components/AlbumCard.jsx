@@ -2,6 +2,7 @@ import { FaPlay } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 const AlbumCard = ({ album }) => {
+  if (!album) return null;
   const { albumCover, albumName, artistName } = album;
 
   return (

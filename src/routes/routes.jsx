@@ -5,6 +5,7 @@ import Artist from "../pages/Artist";
 import Contact from "../pages/Contact";
 import Layout from "../components/Layout";
 import Error from "../pages/Error";
+import Search from "../pages/Search";
 
 const routes = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const routes = createBrowserRouter([
       {
         path: "artist",
         element: <Artist />, //artist page
+      },
+      {
+        path: "search",
+        element: <Search />, //search page
       },
       {
         path: "contact",

@@ -1,39 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FiMenu, FiX } from "react-icons/fi"; // Mobile menu icons
 import logo from "../assets/logo.png";
 import logo_dark from "../assets/logo_dark.png";
 import NavbarData from "../data/NavbarData";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Navbar = () => {
-  //get user's system theme
-  const getSystemTheme = () =>
-    window.matchMedia("(prefers-color-scheme:dark)").matches;
-
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const storedTheme = localStorage.getItem("darkMode");
-    return storedTheme !== null ? storedTheme === "true" : getSystemTheme();
-  });
-
+  const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // For mobile menu
-
-  //useEffect for dark and light mode
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, [isDarkMode]);
-
-  //useEffect for using the system theme
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme:dark");
-    const handleChange = (e) => setIsDarkMode(e.matches);
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
 
   const toggleDarkMode = () => {
     setIsDarkMode((prev) => !prev);
@@ -91,19 +67,30 @@ const Navbar = () => {
 
       {/* Search & Dark Mode Toggle */}
       <div className="flex items-center space-x-4">
-        <span className="bg-black p-1 rounded-full">
-          <CiSearch className="text-2xl text-white" />
-        </span>
+        {/* Search Bar (Visible on Larger Screens) */}
+        <div className="hidden md:flex items-center border rounded-full px-3 py-1 bg-gray-200 dark:bg-gray-800">
+          <NavLink to={"/search"}>
+            {" "}
+            <CiSearch className="text-2xl text-gray-600 dark:text-gray-300" />
+          </NavLink>
+        </div>
 
+        {/* Search Icon (Mobile) */}
+        <span className="md:hidden bg-black p-1 rounded-full">
+          <NavLink to={"/search"}>
+            {" "}
+            <CiSearch className="text-2xl text-white" />
+          </NavLink>
+        </span>
         {/* Dark Mode Toggle Button */}
         <div
           className={`w-14 h-7 rounded-full relative transition-colors duration-300 hover:cursor-pointer ${
-            isDarkMode ? "bg-white" : "bg-black"
+            isDarkMode ? "bg-gray-700" : "bg-black"
           }`}
           onClick={toggleDarkMode}
         >
           <div
-            className={`w-5 h-5 rounded-full absolute top-1 transition-all duration-300 ${
+            className={`w-6 h-6 rounded-full absolute top-0.5 transition-all duration-300 ${
               isDarkMode ? "right-1 bg-black" : "left-1 bg-white"
             }`}
           ></div>

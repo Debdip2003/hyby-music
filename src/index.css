@@ -1,38 +1,41 @@
 @import "tailwindcss";
 
+/* Dark Mode Global Styles */
 body.dark {
   background-color: black;
   color: white;
 }
 
+/* Ensuring elements inherit correct colors */
 body.dark * {
   color: inherit;
 }
 
+/* Fix for SVGs */
 body.dark svg {
   fill: white !important;
   color: white !important;
 }
 
-/* Styles for the slider */
+/* Fixing slider styles */
 .dark .slider-container {
-  /* Add this class to the outer div if you want to style it */
-  background-color: white; /* Background color of the slider container in dark mode */
+  background-color: white; /* Background color of slider container in dark mode */
 }
 
 .dark .slider-circle {
-  /* Add this class to the inner div if you want to style it */
-  background-color: black; /* Color of the sliding circle in dark mode */
+  background-color: black; /* Inner circle in dark mode */
 }
 
+/* Ensure correct contrast */
 body.dark .bg-black {
-  @apply bg-white text-black;
+  background-color: white !important;
+  color: black !important;
 }
 
 body.dark .text-black {
-  @apply text-black;
+  color: black !important;
 }
 
 body.dark .transition-colors {
-  @apply text-white;
+  color: white !important;
 }
