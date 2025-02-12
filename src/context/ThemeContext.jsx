@@ -2,10 +2,10 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // Create ThemeContext
-export const ThemeContext = createContext();
+const ThemeContext = createContext();
 
 // Theme Provider Component
-export const ThemeProvider = ({ children }) => {
+const ThemeProvider = ({ children }) => {
   // Get user's system theme
   const getSystemTheme = () =>
     window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -44,3 +44,5 @@ export const ThemeProvider = ({ children }) => {
 ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export { ThemeContext, ThemeProvider };

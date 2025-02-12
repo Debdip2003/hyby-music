@@ -2,7 +2,7 @@ import { useContext } from "react";
 import logo from "../assets/logo.png";
 import logo_dark from "..//assets/logo_dark.png";
 import footerData from "../data/FooterData";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Footer = () => {
   const { isDarkMode } = useContext(ThemeContext);

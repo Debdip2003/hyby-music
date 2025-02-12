@@ -1,26 +1,33 @@
 import { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { CiSearch } from "react-icons/ci";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi"; // Mobile menu icons
 import logo from "../assets/logo.png";
 import logo_dark from "../assets/logo_dark.png";
-import NavbarData from "../data/NavbarData";
+import AdminNavbarData from "../data/AdminNavbarData"; // Import Admin Navbar Data
 import { ThemeContext } from "../context/ThemeContext";
 import Button from "./Button"; // Import your Button component
+import { useAuth } from "../hooks/useAuth";
 
-const Navbar = () => {
+const AdminNavbar = () => {
   const { isDarkMode, setIsDarkMode } = useContext(ThemeContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // For mobile menu
+
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const toggleDarkMode = () => {
     setIsDarkMode((prev) => !prev);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/"); // Redirect to home page
+  };
+
   return (
     <nav className="w-full flex items-center justify-between px-6 md:px-12 py-4 transition-colors duration-300">
       {/* Logo */}
-      <NavLink to="/">
-        {" "}
+      <NavLink to="/admin">
         <img
           src={isDarkMode ? logo_dark : logo}
           alt="logo"
@@ -30,14 +37,12 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center space-x-8">
-        {NavbarData.map((data) => (
+        {AdminNavbarData.map((data) => (
           <NavLink
             key={data.id}
             to={data.disabled ? "" : data.path}
-            className={({ isActive }) =>
-              `text-lg hover:cursor-pointer transition-colors duration-300 ${
-                isActive ? "underline underline-offset-3" : ""
-              }`
+            className={() =>
+              `text-lg hover:cursor-pointer transition-colors duration-300 `
             }
           >
             {data.name}
@@ -56,8 +61,7 @@ const Navbar = () => {
       {/* Mobile Menu Dropdown */}
       {isMenuOpen && (
         <div className="absolute top-16 left-0 w-full bg-white dark:bg-gray-900 shadow-md py-4 md:hidden z-10">
-          {" "}
-          {NavbarData.map((data) => (
+          {AdminNavbarData.map((data) => (
             <NavLink
               key={data.id}
               to={data.disabled ? "" : data.path}
@@ -70,22 +74,8 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Search & Dark Mode Toggle */}
+      {/*  Dark Mode Toggle */}
       <div className="flex items-center space-x-4">
-        <div className="hidden md:flex items-center border rounded-full px-3 py-1 bg-gray-200 dark:bg-gray-800">
-          <NavLink to={"/search"}>
-            <CiSearch className="text-2xl text-gray-600 dark:text-gray-300" />
-          </NavLink>
-        </div>
-
-        {/* Search Icon (Mobile) */}
-        <span className="md:hidden">
-          {" "}
-          <NavLink to={"/search"}>
-            <CiSearch className="text-2xl text-gray-600 dark:text-gray-300" />{" "}
-          </NavLink>
-        </span>
-
         {/* Dark Mode Toggle Button */}
         <div
           className={`w-14 h-7 rounded-full relative transition-colors duration-300 hover:cursor-pointer ${
@@ -100,15 +90,16 @@ const Navbar = () => {
           ></div>
         </div>
 
-        {/* Admin login button */}
-        <NavLink to={"/adminLogin"}>
-          <div className="rounded-md bg-black text-white">
-            <Button>Admin</Button>
-          </div>
-        </NavLink>
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="rounded-md bg-black text-white"
+        >
+          <Button>Logout</Button>
+        </button>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default AdminNavbar;

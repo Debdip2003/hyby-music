@@ -6,34 +6,49 @@ import Contact from "../pages/Contact";
 import Layout from "../components/Layout";
 import Error from "../pages/Error";
 import Search from "../pages/Search";
+import AdminLogin from "../pages/AdminLogin";
+import ProtectedRoutes from "../components/ProtectedRoutes";
+import AdminDashboard from "../pages/AdminDashboard";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, //make the navbar accessible to all the other pages
+    element: <Layout />, // Navbar accessible on all pages
     children: [
       {
-        index: true, // make the home page as the default page
+        index: true, // Default page is Homepage
         element: <Homepage />,
       },
       {
         path: "albums",
-        element: <Albums />, //album page
+        element: <Albums />,
       },
       {
         path: "artist",
-        element: <Artist />, //artist page
+        element: <Artist />,
       },
       {
         path: "search",
-        element: <Search />, //search page
+        element: <Search />,
       },
       {
         path: "contact",
-        element: <Contact />, //contact page
+        element: <Contact />,
       },
     ],
-    errorElement: <Error />, //error page
+    errorElement: <Error />, // Error page
+  },
+  {
+    path: "/adminLogin",
+    element: <AdminLogin />, // Admin login (outside Layout)
+  },
+  {
+    path: "dashboard",
+    element: (
+      <ProtectedRoutes>
+        <AdminDashboard />
+      </ProtectedRoutes>
+    ),
   },
 ]);
 
